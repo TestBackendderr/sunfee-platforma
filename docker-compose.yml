@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    ports:
+      - '3003:3003'
+    environment:
+      - PORT=3003
+    networks:
+      - backend
+
+networks:
+  backend:
