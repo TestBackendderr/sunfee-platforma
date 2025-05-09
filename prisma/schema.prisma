@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  Administrator
+  Handlowiec
+  Biuro_Obslugi
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String
+  password String
+  refreshToken String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role Role
+  umowy Umowa[] // Связь с моделью Umowa
+}
+
+model Umowa {
+  id Int @id @default(autoincrement())
+  handlowiec String
+  dataPodpisania DateTime
+  numerUmowy String @unique
+  imieNazwisko String
+  telefon String
+  ulica String
+  miejscowosc String
+  kodPocztowy String
+  powiat String
+  wojewodztwo String
+  rodzajKlienta String
+  peselNip String
+  dowod String
+  tel2 String?
+  kontaktowyTel String?
+  email String?
+  operatorOsd String
+  czyWlascicielLicznika String
+  adresImie String
+  adresUlica String
+  adresNrDomu String
+  adresMiejscowosc String
+  adresKodPocztowy String
+  adresPowiat String
+  adresWojewodztwo String
+  czyPosiadaInstalacje String
+  miejsceInstalacji String?
+  miUlica String?
+  miNrDomu String?
+  miMiejscowosc String?
+  miKod String?
+  miPowiat String?
+  miWojewodztwo String?
+  miejsceMontazu String?
+  lancuchy String?
+  licznikLokalizacja String?
+  zasiegInternetu String?
+  dwieKreski String?
+  odgromowa String?
+  numerDzialki String?
+  mocPrzylaczeniowa String?
+  zabezpieczenie String?
+  fazowa String?
+  taryfa String?
+  numerLicznika String?
+  numerPpm String?
+  cenaBrutto Float
+  pierwszaWplata Float
+  sposobPlatnosci1 String
+  czyJednaWplata String
+  drugaWplata Float?
+  sposobPlatnosci2 String?
+  powierzchniaDomu String?
+  uwagiHandlowca String?
+  banerZamontowany String?
+  handlowiecWynagrodzenie Float?
+  przedaneProdukty String[]
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
